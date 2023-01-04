@@ -58,15 +58,15 @@ def in_order(node = self.root)
 end
 
 def pre_order(node=self.root)
-    return if node.nil
-    print"#{node.value}"
-    print(" ")
-    pre_order(node.left)
-    pre_order(node.right)
+  return if node.nil
+  print"#{node.value}"
+  print(" ")
+  pre_order(node.left)
+  pre_order(node.right)
 end
 
 def post_order(node=self.root)
-    return if root.nil
+  return if root.nil
   post_order(node.left)
   post_order(node.right)
   print"#{node.value}"
@@ -101,19 +101,17 @@ def remove_element(value,node = self.root)
         min_of_right_subtree = find_min(node.right)
         node.value = min_of_right_subtree.value
         node.right = remove_element(min_of_right_subtree.value, node.right)
-      elsif node.left != nil
+      elsif node.left.nil
         node = node.left
-      elsif node.right != nil
+      elsif node.right.nil
         node = node.right
       else
         node = nil
       end
     end
-  return node
+  node
 end
 
-def all_paths(node = self.root)
-end
 puts "Enter number which operation you want to perform: "
 puts "1.Add elements in BST"
 puts "2.Print largest element"
@@ -125,20 +123,33 @@ puts "7.Print preorder of BST"
 puts "8.Check whether element is present or not"
 puts "9.Remove an element from BST"
 puts "10.Print all the paths i.e starting from the root to the leaf"
-puts "11.Quit"
+puts "11.Enter the file name for previous values in BST"
+puts "12.Quit"
 root = BST.new()
 loop_end = false
-#fileobject = File.new("element_file.txt","a+")
-while(loop_end)
-  operation_num=gets.chomp()
+fileobject = File.new("element_file.txt","a+")
+def elements_file(node = self.root)
+  return if node.nill
+  elements_file(node.left)
+  fileobject.syswrite(node.value)
+  elements_file(node.right)
+def load_BST
+  root = BST.new() 
+  elements = fileobject.read()
+  for i in 1..elements.length
+    insert(value)
+  end
+
+while(!loop_end)
+  operation_num = gets.chomp()
   operation_num.to_i
   case operation_num
   when 1
-    elements=[]
+    elements = []
     print("How much values you want to add in BST:")
-    num_values=gets.chomp()
+    num_values = gets.chomp()
     for i in 1..num_values
-      value=gets()
+      value = gets()
       print(", ")
       insert(value)
     end
@@ -156,15 +167,20 @@ while(loop_end)
     pre_order(root)
   when 8
     print("Enter element which you want to search:")
-    element=gets.chomp()
+    element = gets.chomp()
     search_element(root,element)
   when 9
     print("Enter element which you want to remove:")
-    element=gets.chomp()
+    element = gets.chomp()
     print(remove_element(root,element))
   when 10
     print(all_paths(root))
   when 11
+    name = gets()
+    if name = element_file
+      load_bst()
+  when 12
+    elements_file(root)
     print("exit")
     loop_end = true
   else 
