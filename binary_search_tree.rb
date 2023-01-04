@@ -1,6 +1,6 @@
 class Tree
   attr_accessor :value, :left, :right
-
+#bla and llala
   def initialize(value) 
     @value = value
     @left = nil
