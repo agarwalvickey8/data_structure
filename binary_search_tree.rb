@@ -1,17 +1,21 @@
 class Tree
   attr_accessor :value, :left, :right
+
   def initialize(value) 
     @value = value
     @left = nil
     @right = nil
   end
 end
+
 class BST
   attr_accessor :root
+
   def initialize()
     @root=nil
   end
 end
+
 def insert(value)
    if @root == nil
      @root = Tree.new(value) 
@@ -50,7 +54,10 @@ def smallest_element(node=self.root)
   else if node.left == nil
     return node.value
   else
-    return smallest_element(root.left) 
+    return smallest_element(root.left)
+  end
+end
+
 def in_order(node = self.root)
   if node == nil
     return
@@ -130,7 +137,7 @@ def remove_element(value,node = self.root)
 end
 
 def all_paths(node = self.root)
-
+end
 puts "Enter number which operation you want to perform: "
 puts "1.Add elements in BST"
 puts "2.Print largest element"
@@ -143,19 +150,21 @@ puts "8.Check whether element is present or not"
 puts "9.Remove an element from BST"
 puts "10.Print all the paths i.e starting from the root to the leaf"
 puts "11.Quit"
-operation_num=gets.chomp()
-operation_num.to_i
-root=new.BST
-while(operation_num!=11)
+root = BST.new()
+loop_end = false
+while(loop_end)
+  operation_num=gets.chomp()
+  operation_num.to_i
   case operation_num
   when 1
     elements=[]
-    print "How much values you want to add in BST:"
+    print("How much values you want to add in BST:")
     num_values=gets.chomp()
     for i in 1..num_values
       value=gets()
       print(", ")
       insert(value)
+    end
   when 2
     puts(largest_element(root))
   when 3
@@ -171,7 +180,7 @@ while(operation_num!=11)
   when 8
     print("Enter element which you want to search:")
     element=gets.chomp()
-    print(search_element(root,element)
+    print(search_element(root,element))
   when 9
     print("Enter element which you want to remove:")
     element=gets.chomp()
@@ -180,12 +189,8 @@ while(operation_num!=11)
     print(all_paths(root))
   when 11
     print("exit")
+    loop_end = true
   else 
-    puts "Default value"
+    "Default value"
   end
-  operation_num=gets.chomp()
-  operation_num.to_i
 end
-
-
-
