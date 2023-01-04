@@ -1,6 +1,6 @@
 class Tree
   attr_accessor :value, :left, :right
-#bla and llala
+
   def initialize(value) 
     @value = value
     @left = nil
@@ -11,128 +11,104 @@ end
 class BST
   attr_accessor :root
 
-  def initialize()
-    @root=nil
+  def initialize
+    @root = nil
   end
 end
 
 def insert(value)
-   if @root == nil
-     @root = Tree.new(value) 
-   else 
-     current_node = @root 
-     previous_node = @root 
-     while current_node != nil 
-       previous_node = current_node 
-       if value < current_node.value
-         current_node = current_node.left
-       else 
-         current_node = current_node.right
-       end
-     end
-     if value < previous_node.value
-       previous_node.left = Tree.new(value)
-     else 
-       previous_node.right = Tree.new(value)
-     end
-   end
+  if self.root.nil
+  self.root = Tree.new(value) 
+  else 
+    current_node = self.root 
+    previous_node = self.root 
+    while current_node.nil 
+      previous_node = current_node 
+      if value < current_node.value
+        current_node = current_node.left
+      else 
+        current_node = current_node.right
+      end
+    end
+    if value < previous_node.value
+      previous_node.left = Tree.new(value)
+    else 
+      previous_node.right = Tree.new(value)
+    end
+  end
 end
 
 def largest_element(node=self.root)
-  if node == nil
-    return nil
-  else if node.right == nil
-    return node.value
-  else
-    return largest_element(node.right)
-  end
+  return nil if node.nil
+  return node.value if node.right.nil
+  return largest_element(node.right)
 end
 
 def smallest_element(node=self.root)
-  if node == nil
-    return nil
-  else if node.left == nil
-    return node.value
-  else
-    return smallest_element(root.left)
-  end
+  return node.value if node.left.nil
+  smallest_element(root.left)
 end
 
 def in_order(node = self.root)
-  if node == nil
-    return
-  end
+  return if node.nil
   in_order(node.left)
-  print(node.value)
+  print"#{node.value}"
   print(" ")
   in_order(node.right)
 end
 
 def pre_order(node=self.root)
-  if node == nil
-    return 
-  end
-    print(node.value)
+    return if node.nil
+    print"#{node.value}"
     print(" ")
     pre_order(node.left)
     pre_order(node.right)
 end
 
 def post_order(node=self.root)
-  if root == nil
-    return
-  end
+    return if root.nil
   post_order(node.left)
   post_order(node.right)
-  print(node.value)
+  print"#{node.value}"
   print(" ")
 end
 
 def in_order(node=self.root)
-  if node == nil
-    return
+  return if node.nil
   in_order(node.left)
-  print(node.value)
+  print"#{node.value}"
   print(" ")
   in_order(node.right)
   end
 end  
-  
+
 def search_element(node = self.root,element)
-  if node == nil
-    return false
-  end
-  if node.value == element
-    return true
-  else if node.value > element
-    search_element(node.left, element)
-  else
-    search_element(node.right, element)
-  end
+  return false if node.nil
+  return true if element == node.value
+  elsif element < node.value
 end
 
+#review again
 def remove_element(value,node = self.root)
-  if node == nil
-    return nil
-  end
-  if node.value > value
+  return nil if node.nil
+  if value < node.value
     node.left = remove_element(value, node.left)
   elsif node.value < value
     node.right = remove_element(value, node.right)
   else
-    if node.left != nil && node.right != nil
-      temp = node
-      min_of_right_subtree = find_min(node.right)
-      node.value = min_of_right_subtree.value
-      node.right = remove_element(min_of_right_subtree.value, node.right)
-    elsif node.left != nil
-      node = node.left
-    elsif node.right != nil
-      node = node.right
-    else
-      node = nil
+      if node.left.nil && node.right.nil
+        temp = node
+        min_of_right_subtree = find_min(node.right)
+        node.value = min_of_right_subtree.value
+        node.right = remove_element(min_of_right_subtree.value, node.right)
+      elsif node.left != nil
+        node = node.left
+      elsif node.right != nil
+        node = node.right
+      else
+        node = nil
+      end
     end
-  end
   return node
 end
 
@@ -152,6 +128,7 @@ puts "10.Print all the paths i.e starting from the root to the leaf"
 puts "11.Quit"
 root = BST.new()
 loop_end = false
+#fileobject = File.new("element_file.txt","a+")
 while(loop_end)
   operation_num=gets.chomp()
   operation_num.to_i
@@ -166,9 +143,9 @@ while(loop_end)
       insert(value)
     end
   when 2
-    puts(largest_element(root))
+    largest_element(root)
   when 3
-    puts(smallest_element(root))
+    smallest_element(root)
   when 4
     in_order(root)
   when 5
@@ -180,7 +157,7 @@ while(loop_end)
   when 8
     print("Enter element which you want to search:")
     element=gets.chomp()
-    print(search_element(root,element))
+    search_element(root,element)
   when 9
     print("Enter element which you want to remove:")
     element=gets.chomp()
