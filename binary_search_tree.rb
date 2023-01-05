@@ -160,9 +160,9 @@ class BST
 				insert(value)
 			end
 		when 2
-			largest_element
+			print(largest_element)
 		when 3
-			smallest_element
+			print(smallest_element)
 		when 4
 			in_order
 		when 5
