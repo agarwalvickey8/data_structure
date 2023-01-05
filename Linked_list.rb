@@ -26,7 +26,7 @@ end
 
 def find_tail
   node = self.head
-  while !node.nil
+  while node.nil?
     return node if node.nil
     node = node.next
   end    
@@ -34,7 +34,7 @@ end
 
 def check_value(value)
   node = self.head
-  while node != nil
+  while node.nil?
     return true if node.value == value
   end
   false
