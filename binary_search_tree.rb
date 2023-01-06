@@ -15,63 +15,63 @@ class BST
 		@root = nil
 	end
 	def insert(value)
-  	if self.root.nil?
-  		self.root = Tree.new(value) 
-  	else 
-    	current_node = self.root 
-    	previous_node = self.root 
-    	while current_node? 
-      	previous_node = current_node 
-      	value < current_node.value ? current_node.left : current_node = current_node.right
-    	end
-    	if value < previous_node.value
-      	previous_node.left = Tree.new(value)
-    	else 
-      	previous_node.right = Tree.new(value)
-    	end
-  	end
+		if self.root.nil?
+			self.root = Tree.new(value) 
+		else 
+			current_node = self.root 
+			previous_node = self.root 
+			while current_node? 
+				previous_node = current_node 
+				value < current_node.value ? current_node.left : current_node = current_node.right
+			end
+			if value < previous_node.value
+				previous_node.left = Tree.new(value)
+			else 
+				previous_node.right = Tree.new(value)
+			end
+		end
 	end
 
 	def largest_element(node = self.root)
-  	return node if node.nil?
-  	return node.value if node.right.nil?
-  	return largest_element(node.right)
+		return node if node.nil?
+		return node.value if node.right.nil?
+		return largest_element(node.right)
 	end
 
 	def smallest_element(node = self.root)
 		return node if node.nil?
-  	return node.value if node.left.nil?
-  	smallest_element(root.left)
+		return node.value if node.left.nil?
+		smallest_element(root.left)
 	end
 
 	def in_order(node = self.root)
-  	return if node.nil?
-  	in_order(node.left)
-  	print "#{node.value}"
-  	print(" ")
-  	in_order(node.right)
+		return if node.nil?
+		in_order(node.left)
+		print "#{node.value}"
+		print(" ")
+		in_order(node.right)
 	end
 
 	def pre_order(node = self.root)
-  	return if node.nil?
-  	print "#{node.value}"
-  	print(" ")
-  	pre_order(node.left)
-  	pre_order(node.right)
+		return if node.nil?
+		print "#{node.value}"
+		print(" ")
+		pre_order(node.left)
+		pre_order(node.right)
 	end
 
 	def post_order(node = self.root)
-  	return if root.nil?
-  	post_order(node.left)
-  	post_order(node.right)
-  	print "#{node.value}"
-  	print(" ")
+		return if root.nil?
+		post_order(node.left)
+		post_order(node.right)
+		print "#{node.value}"
+		print(" ")
 	end  
 
 	def search_element(node = self.root,element)
-  	return false if node.nil?
-  	return search_element(node.left, element) if element < node.value
-    return search_element(node.right, element) if node.value < element
+		return false if node.nil?
+		return search_element(node.left, element) if element < node.value
+		return search_element(node.right, element) if node.value < element
 		true
 	end
 
@@ -110,19 +110,19 @@ class BST
 	end
 
 	def elements_file(node = self.root)
-    return if node.nil?
-    elements_file(node.left)
-    fileobject.syswrite(node.value)
-    elements_file(node.right)
-  end
+		return if node.nil?
+		elements_file(node.left)
+		fileobject.syswrite(node.value)
+		elements_file(node.right)
+	end
 
-  def load_BST
-    root = BST.new
-    elements = fileobject.read()
-    for i in 1..elements.length
-      insert(value)
-    end
-  end
+	def load_BST
+		root = BST.new
+		elements = fileobject.read()
+		for i in 1..elements.length
+			insert(value)
+		end
+	end
 
 	puts "Enter number which operation you want to perform: "
 	puts "1.Add elements in BST"
