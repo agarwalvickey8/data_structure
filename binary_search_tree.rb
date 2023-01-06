@@ -144,7 +144,6 @@ class BST
 		operation_num = gets.chomp()
 		case operation_num.to_i
 		when 1
-			elements = []
 			print("How much values you want to add in BST:")
 			num_values = gets.chomp
 			for i in 1..num_values.to_i
