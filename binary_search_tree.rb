@@ -142,16 +142,15 @@ class BST
 	loop_end = false
 	while(!loop_end)
 		operation_num = gets.chomp()
-		operation_num.to_i
-		case operation_num
+		case operation_num.to_i
 		when 1
 			elements = []
 			print("How much values you want to add in BST:")
 			num_values = gets.chomp
-			for i in 1..num_values
+			for i in 1..num_values.to_i
 				value = gets
 				print(", ")
-				insert(value)
+				insert(value.to_i)
 			end
 		when 2
 			print(largest_element)
@@ -168,17 +167,17 @@ class BST
 		when 8
 			print("Enter element which you want to search:")
 			element = gets.chomp()
-			search_element(root, element)
+			search_element(root, element.to_i)
 		when 9
 			print("Enter element which you want to remove:")
 			element = gets.chomp
-			print(remove_element(element))
+			print(remove_element(element.to_i))
 		when 10
 			arr = Array.new
 			all_paths(root, arr)
 		when 11
 			name = gets()
-			if name = element_file
+			if name == element_file
 				load_bst
 			end
 		when 12
