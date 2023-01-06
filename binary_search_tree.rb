@@ -93,7 +93,7 @@ class BST
 		elsif node.value < value
 			node.right = remove_element(value, node.right)
 		else
-			if node.left.nil? && node.right.nil?
+			if(node.left.nil? && node.right.nil?)
 				temp = node
 				min_of_right_subtree = find_min(node.right)
 				node.value = min_of_right_subtree.value
