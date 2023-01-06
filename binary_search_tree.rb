@@ -14,13 +14,14 @@ class BST
 	def initialize
 		@root = nil
 	end
+
 	def insert(value)
 		if self.root.nil?
 			self.root = TreeNode.new(value) 
 		else 
 			current_node = self.root 
 			previous_node = self.root 
-			while current_node? 
+			while current_node 
 				previous_node = current_node 
 				value < current_node.value ? current_node.left : current_node = current_node.right
 			end
@@ -72,12 +73,12 @@ class BST
 		true
 	end
 
-	def all_path(node = self.root, elements_array)
+	def all_path(node = self.root, elements)
 		return if node.nil?
-		elements_array.push(node.value)
+		elements.push(node.value)
 		print " #{elements_array}" if node.left.nil? && node.right.nil?
-		all_path(node.left, elements_array)
-		all_path(node.right, elements_array)
+		all_path(node.left, elements)
+		all_path(node.right, elements)
 		arr.pop()
 	end
 
@@ -103,20 +104,23 @@ class BST
 		end
 		node
 	end
-end
-fileobject = File.new("elements_file.txt", "a+")
-def add_elements_to_file(node = self.root)
-	return if node.nil?
-	add_elements_to_file(node.left)
-	fileobject.syswrite(node.value)
-	add_elements_to_file(node.right)
+
+	def add_elements_to_file(node = self.root, fileobject)
+		return if node.nil?
+		add_elements_to_file(node.left, fileobject)
+		fileobject.write(" #{node.value}")
+		add_elements_to_file(node.right, fileobject)
+	end
+
+	def load_BST
+		file = File.open("file.txt","a+")
+		file_data = file.read
+		@elements = []
+		@elements = file_data.split("\n").map(&:to_i)
+		make_bst(self.elements)
+	end
 end
 
-def load_BST
-	root = BST.new
-	elements = fileobject.read()
-	elements.each { |element| insert(element) }
-end
 puts "Enter number which operation you want to perform: "
 puts "1.Add elements in BST"
 puts "2.Print largest element"
@@ -131,47 +135,47 @@ puts "10.Print all the paths i.e starting from the root to the leaf"
 puts "11.Enter the file name for previous values in BST"
 puts "12.Quit"
 
-root = BST.new
-while(true)
+bst = BST.new
+fileobject = File.open("file.txt", "w+")
+while true
 	operation_num = gets.chomp
 	case operation_num.to_i
 	when 1
 		puts "Enter values which you want to add in BST separated by comma:"
 		element_values = gets
 		element_values_array = element_values.split(",")
-		for element in element_values_array do
-			insert(element.to_i)
-		end
+		element_values_array.each { |element| bst.insert(element.to_i) }
 	when 2
-		root ? print(root.largest_element) : print("Currently BST is empty")
+		bst ? print(bst.largest_element) : print("Currently BST is empty")
 	when 3
-		root ? print(root.smallest_element) : print("Currently BST is empty")
+		bst ? print(bst.smallest_element) : print("Currently BST is empty")
 	when 4
-		root.in_order
+		bst.in_order
 	when 5
-		root.post_order
+		bst.post_order
 	when 6
-		root.level_order
+		bst.level_order
 	when 7
-		root.pre_order
+		bst.pre_order
 	when 8
 		print("Enter element which you want to search:")
-		element = gets.chomp
-		search_element(root, element.to_i)
+		element = gets
+		bst.search_element(element.to_i)
 	when 9
 		print("Enter element which you want to remove:")
 		element = gets.chomp
-		print(remove_element(element.to_i))
+		print(bst.remove_element(element.to_i))
 	when 10
 		elements_array = Array.new
-		root.all_paths(root, elements_array)
+		bst.all_paths(elements_array)
 	when 11
 		name = gets
 		if name == elements_file && elements_file?
-			load_BST
+			bst.load_BST
 		end
 	when 12
-		add_elements_to_file
+		bst.add_elements_to_file(fileobject)
+
 		print("exit")
 		break
 	else
