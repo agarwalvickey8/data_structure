@@ -113,7 +113,7 @@ class BST
 	end
 
 	def load_BST
-		file = File.open("file.txt","a+")
+		file = File.open("file.txt","w+")
 		file_data = file.read
 		@elements = []
 		@elements = file_data.split("\n").map(&:to_i)
@@ -175,7 +175,6 @@ while true
 		end
 	when 12
 		bst.add_elements_to_file(fileobject)
-
 		print("exit")
 		break
 	else
