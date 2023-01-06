@@ -1,97 +1,92 @@
 class Tree
-	attr_accessor :value, :left, :right
+  attr_accessor :value, :left, :right
 
-	def initialize(value) 
-		@value = value
-		@left = nil
-		@right = nil
-	end
+  def initialize(value) 
+    @value = value
+    @left = nil
+    @right = nil
+  end
 end
 
 class BST
 	attr_accessor :root
 
-	def initialize
+  def initialize
 		@root = nil
 	end
-
 	def insert(value)
-		if self.root.nil?
-			self.root = Tree.new(value) 
-		else 
-			current_node = self.root 
-			previous_node = self.root 
-			while !current_node.nil? 
-				previous_node = current_node
-				value < current_node.value ? current_node = current_node.left : current_node = current_node.right
-			end
-			value < previous_node.value ? previous_node.left = Tree.new(value) : previous_node.right = Tree.new(value)
-		end
+  	if self.root.nil?
+  		self.root = Tree.new(value) 
+  	else 
+    	current_node = self.root 
+    	previous_node = self.root 
+    	while current_node? 
+      	previous_node = current_node 
+      	value < current_node.value ? current_node.left : current_node = current_node.right
+    	end
+    	if value < previous_node.value
+      	previous_node.left = Tree.new(value)
+    	else 
+      	previous_node.right = Tree.new(value)
+    	end
+  	end
 	end
 
-	def largest_element
-		node = self.root
-		return nil if node.nil?
-		return node.value if node.right.nil?
-		largest_element(node.right)
+	def largest_element(node = self.root)
+  	return node if node.nil?
+  	return node.value if node.right.nil?
+  	return largest_element(node.right)
 	end
 
-	def smallest_element
-		node = self.root
-		return nil if node.nil?
-		return node.value if node.left.nil?
-		smallest_element(root.left)
+	def smallest_element(node = self.root)
+		return node if node.nil?
+  	return node.value if node.left.nil?
+  	smallest_element(root.left)
 	end
 
-	def in_order
-		node = self.root
-		return if node.nil?
-		in_order(node.left)
-		print "#{node.value}"
-		print(" ")
-		in_order(node.right)
+	def in_order(node = self.root)
+  	return if node.nil?
+  	in_order(node.left)
+  	print "#{node.value}"
+  	print(" ")
+  	in_order(node.right)
 	end
 
-	def pre_order
-		node = self.root
-		return if node.nil?
-		print "#{node.value}"
-		print(" ")
-		pre_order(node.left)
-		pre_order(node.right)
+	def pre_order(node = self.root)
+  	return if node.nil?
+  	print "#{node.value}"
+  	print(" ")
+  	pre_order(node.left)
+  	pre_order(node.right)
 	end
 
-	def post_order
-		node = self.root
-		return if root.nil?
-		post_order(node.left)
-		post_order(node.right)
-		print "#{node.value}"
-		print(" ")
-	end
+	def post_order(node = self.root)
+  	return if root.nil?
+  	post_order(node.left)
+  	post_order(node.right)
+  	print "#{node.value}"
+  	print(" ")
+	end  
 
-	def search_element(element)
-		node = self.root
-		return false if node.nil?
-		return search_element(node.left,element) if element < node.value
-		return search_element(node.right,element) if node.value < element
+	def search_element(node = self.root,element)
+  	return false if node.nil?
+  	return search_element(node.left, element) if element < node.value
+    return search_element(node.right, element) if node.value < element
 		true
 	end
 
-	def all_path(root, arr)
-		node = self.root
+	def all_path(node = self.root, arr)
 		return if node.nil?
-		arr.push(node.data)
+		arr.push(node.value)
 		if(node.left.nil? && node.right.nil?)
-			print "path" , arr
+			print " " , arr
 		end
-		all_path(node.left,arr)
-		all_leaf_path(node.right,arr)
+		all_path(node.left, arr)
+		all_path(node.right, arr)
 		arr.pop()
 	end
 
-	def remove_element(value)
-		node = self.root
+	def remove_element(value, node = self.root)
 		return nil if node.nil?
 		if value < node.value
 			node.left = remove_element(value, node.left)
@@ -114,8 +109,7 @@ class BST
 		node
 	end
 
-  def elements_file
-    node = self.root
+	def elements_file(node = self.root)
     return if node.nil?
     elements_file(node.left)
     fileobject.syswrite(node.value)
@@ -164,24 +158,24 @@ class BST
 		when 3
 			print(smallest_element)
 		when 4
-			in_order
+			in_order(root)
 		when 5
-			post_order
+			post_order(root)
 		when 6
-			level_order
+			level_order(root)
 		when 7
-			pre_order
+			pre_order(root)
 		when 8
 			print("Enter element which you want to search:")
 			element = gets.chomp()
-			search_element(element)
+			search_element(root, element)
 		when 9
 			print("Enter element which you want to remove:")
 			element = gets.chomp
 			print(remove_element(element))
 		when 10
 			arr = Array.new
-			all_paths(root,arr)
+			all_paths(root, arr)
 		when 11
 			name = gets()
 			if name = element_file
@@ -192,8 +186,7 @@ class BST
 			print("exit")
 			loop_end = true
 		else 
-			"Default value"
+			puts "Default value"
 		end
 	end
 end
-
