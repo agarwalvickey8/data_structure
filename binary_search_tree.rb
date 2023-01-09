@@ -66,14 +66,14 @@ class BST
 		print "#{node.value} "
 	end  
 
-	def search_element(node = self.root, element)
+	def search_element(element, node = self.root)
 		return false if node.nil?
 		return search_element(node.left, element) if element < node.value
 		return search_element(node.right, element) if node.value < element
 		true
 	end
 
-	def all_path(node = self.root, elements)
+	def all_path(elements, node = self.root)
 		return if node.nil?
 		elements.push(node.value)
 		print " #{elements_array}" if node.left.nil? && node.right.nil?
@@ -146,9 +146,9 @@ while true
 		element_values_array = element_values.split(",")
 		element_values_array.each { |element| bst.insert(element.to_i) }
 	when 2
-		bst ? print(bst.largest_element) : print("Currently BST is empty")
+		print bst ? bst.largest_element : "Currently BST is empty"
 	when 3
-		bst ? print(bst.smallest_element) : print("Currently BST is empty")
+		print bst ? bst.smallest_element : "Currently BST is empty"
 	when 4
 		bst.in_order
 	when 5
