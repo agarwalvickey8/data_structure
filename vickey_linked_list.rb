@@ -115,7 +115,7 @@ class BST
 	def load_BST
 		bst = BST.new
 		elements = File.open("file.txt", "w+")
-		elements.each {|element| bst.insert(element)}
+		elements.each { |element| bst.insert(element) }
 		bst
 	end
 end
@@ -215,15 +215,14 @@ class LinkedList < Node
 	def search(data)
 		curr_node = @head
 		while curr_node
-			if curr_node.data == data
-				return true
-			end
+			return curr_node.data == data
 			curr_node = curr_node.right
 		end
 		false
 	end
 
-	def print_ll(head = self.head)
+	def print_ll
+		head = self.head
 		curr_node = @head
 		while curr_node
 			puts curr_node.data
@@ -231,7 +230,8 @@ class LinkedList < Node
 		end
 	end
 
-	def reverse(head = self.head)
+	def reverse_ll
+		head = self.head
 		return head if head.nil?
 		curr_head = nil
 		curr_tail = nil
@@ -248,6 +248,7 @@ class LinkedList < Node
 		@tail = curr_tail
 	end
 end
+
 def linked_list_task
 	linked_list = LinkedList.new
 	while true
@@ -268,9 +269,9 @@ def linked_list_task
 		when 2
 			print "Enter the element : "
 			element = gets.chomp.to_i
-			linked_list.search(element) ? (puts "Found") : (puts "Not Found")
+			puts linked_list.search(element) ? "Found" : puts "Not Found"
 		when 3
-			linked_list.reverse
+			linked_list.reverse_ll
 			puts "Linked List reversed"
 		when 4
 			linked_list.print_ll
@@ -281,12 +282,13 @@ def linked_list_task
 		end
 	end
 end
+
 def ll_bst
 	puts "What you want to use : "
 	puts "1. Linked List"
 	puts "2. Binary Search Tree"
 	choice = gets.chomp.to_i
-	choice == 1 ? linked_list_task : bst_task
+	1 == choice ? linked_list_task : bst_task
 end
 
 ll_bst
