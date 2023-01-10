@@ -269,7 +269,7 @@ def linked_list_task
 		when 2
 			print "Enter the element : "
 			element = gets.chomp.to_i
-			puts linked_list.search(element) ? "Found" : puts "Not Found"
+			puts linked_list.search(element) ? "Found" : "Not Found"
 		when 3
 			linked_list.reverse_ll
 			puts "Linked List reversed"
