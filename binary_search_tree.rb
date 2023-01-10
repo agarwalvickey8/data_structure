@@ -113,6 +113,7 @@ class BST
 	end
 
 	def load_BST
+		bst = BST.new
 		elements = File.open("file.txt", "w+")
 		elements.each |element| bst.insert(element)
 		bst
