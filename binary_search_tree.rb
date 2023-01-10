@@ -76,10 +76,10 @@ class BST
 	def all_path(elements, node = self.root)
 		return if node.nil?
 		elements.push(node.value)
-		print " #{elements_array}" if node.left.nil? && node.right.nil?
-		all_path(node.left, elements)
-		all_path(node.right, elements)
-		arr.pop()
+		print "#{elements} " if node.left.nil? && node.right.nil?
+		all_path(elements, node.left)
+		all_path(elements, node.right)
+		elements.pop()
 	end
 
 	def remove_element(value, node = self.root)
@@ -105,19 +105,17 @@ class BST
 		node
 	end
 
-	def add_elements_to_file(node = self.root, fileobject)
+	def add_elements_to_file(fileobject, node = self.root)
 		return if node.nil?
-		add_elements_to_file(node.left, fileobject)
-		fileobject.write(" #{node.value}")
-		add_elements_to_file(node.right, fileobject)
+		add_elements_to_file(fileobject, node.left)
+		fileobject.write("#{node.value}")
+		add_elements_to_file(fileobject, node.right)
 	end
 
 	def load_BST
-		file = File.open("file.txt","w+")
-		file_data = file.read
-		@elements = []
-		@elements = file_data.split("\n").map(&:to_i)
-		make_bst(self.elements)
+		elements = File.open("file.txt", "w+")
+		elements.each |element| bst.insert(element)
+		bst
 	end
 end
 
@@ -134,9 +132,7 @@ puts "9.Remove an element from BST"
 puts "10.Print all the paths i.e starting from the root to the leaf"
 puts "11.Enter the file name for previous values in BST"
 puts "12.Quit"
-
 bst = BST.new
-fileobject = File.open("file.txt", "w+")
 while true
 	operation_num = gets.chomp
 	case operation_num.to_i
@@ -158,24 +154,27 @@ while true
 	when 7
 		bst.pre_order
 	when 8
-		print("Enter element which you want to search:")
+		print "Enter element which you want to search:"
 		element = gets
-		bst.search_element(element.to_i)
+		print bst.search_element(element.to_i)
 	when 9
-		print("Enter element which you want to remove:")
+		print "Enter element which you want to remove:"
 		element = gets.chomp
-		print(bst.remove_element(element.to_i))
+		bst.remove_element(element.to_i)
 	when 10
-		elements_array = Array.new
-		bst.all_paths(elements_array)
+		elements = Array.new
+		bst.all_path(elements)
 	when 11
 		name = gets
-		if name == elements_file && elements_file?
-			bst.load_BST
+		if name == "file"
+			bst = bst.load_BST
+		else
+			puts "Wrong file name!"
 		end
 	when 12
+		fileobject = File.new("elements.txt", "w+")
 		bst.add_elements_to_file(fileobject)
-		print("exit")
+		fileobject.close
 		break
 	else
 		puts "Please enter value from given options"
